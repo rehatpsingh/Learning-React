@@ -1,11 +1,19 @@
 import styles from "../Components/item.module.css";
 
-console.log(styles);
-
-const Item = ({ foodItems }) => {
+const Item = ({ foodItems, bought, handleBuyButton }) => {
   return (
-    <li className={`${styles["kg-item"]} list-group-item`}>
+    <li
+      className={`${styles["kg-item"]} list-group-item ${bought && "active"}`}
+    >
       <span className={styles["kg-span"]}>{foodItems}</span>
+      <button
+        className={`${styles.button} btn btn-${
+          bought === false ? "info" : "danger"
+        }`}
+        onClick={handleBuyButton}
+      >
+        {bought === false ? "Buy" : "Remove"}
+      </button>
     </li>
   );
 };
