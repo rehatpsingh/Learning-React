@@ -1,19 +1,16 @@
-import { useState } from "react";
+import { useContext, useRef } from "react";
+import { BiMessageAdd } from "react-icons/bi";
+import { TodoItemsContext } from "../store/todo-items-store";
 
-function AddTodo({ onNewItem }) {
-  const [todoName, setTodoName] = useState();
-  const [dueDate, setDueDate] = useState();
-
-  const handleNameChange = (event) => {
-    setTodoName(event.target.value);
-  };
-
-  const handleDateChange = (event) => {
-    setDueDate(event.target.value);
-  };
+function AddTodo() {
+  const todoNameElement = useRef();
+  const dueDateElement = useRef();
+  const addNewItemContext = useContext(TodoItemsContext);
 
   const handleAddButtonClicked = () => {
-    onNewItem(todoName, dueDate);
+    const todoName = todoNameElement.current.value;
+    const dueDate = dueDateElement.current.value;
+    addNewItemContext.addNewItem(todoName, dueDate);
   };
 
   return (
@@ -23,18 +20,18 @@ function AddTodo({ onNewItem }) {
           <input
             type="text"
             placeholder="Enter TODO here"
-            onChange={handleNameChange}
+            ref={todoNameElement}
           />
         </div>
         <div className="col-4">
-          <input type="date" onChange={handleDateChange} />
+          <input type="date" ref={dueDateElement} />
         </div>
         <div className="col-2">
           <button
             className="btn btn-success kg-button"
             onClick={() => handleAddButtonClicked()}
           >
-            Add
+            <BiMessageAdd></BiMessageAdd>
           </button>
         </div>
       </div>
